@@ -249,7 +249,7 @@ async function startServer() {
       });
     });
 
-    server.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT || 8000, () => {
       console.log('Server is running on port 3000');
     });
   } catch (error) {
