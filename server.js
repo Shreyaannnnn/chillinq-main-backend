@@ -34,7 +34,7 @@ app.use(bodyParser.json())
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-const uri = "mongodb+srv://shreyanbharadwaj:misschanandlerbong@cluster0.7djkwrb.mongodb.net/?retryWrites=true&w=majority"
+const uri = process.env.CONNECTION
 
 
 // const client = new MongoClient(uri, {
