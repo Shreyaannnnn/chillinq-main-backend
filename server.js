@@ -1531,6 +1531,6 @@ app.post("/profile", async(req, res) =>{
 
 
 
-app.listen(process.env.PORT || 8000,function(){
-    console.log("Server is running");
-})
+// app.listen(process.env.PORT || 8000,function(){
+//     console.log("Server is running");
+// })
