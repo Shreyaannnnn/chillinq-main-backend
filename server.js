@@ -19,7 +19,8 @@ const app = express();
 
 const server = http.createServer(app);
 // const io = socketIO(server);
-const io = socketIO(server);
+// const io = socketIO(server);
+const io = socketIO(server, { path: '/socket' });
 
 // console.log(io);
 
@@ -249,7 +250,9 @@ async function startServer() {
       });
     });
 
-    server.listen(process.env.PORT + "/socket" || 8000, () => {
+    const port = process.env.PORT || 3000;
+
+    server.listen(port , () => {
       console.log('Server is running on port 3000');
     });
   } catch (error) {
