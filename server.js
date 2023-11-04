@@ -180,7 +180,7 @@ async function startServer() {
       // console.log(queue);
 
       // Send the loaded messages to the client
-      console.log(messages);
+      // console.log(messages);
       res.json({ messages, timestamp});
     });
 
@@ -316,7 +316,7 @@ app.post('/checkActiveTime', async (req, res) => {
   console.log("active check");
   // const client = new MongoClient(uri)
   const maker = req.body.maker;
-  console.log(maker);
+  // console.log(maker);
   
   try{
   await client.connect()
@@ -392,7 +392,7 @@ const manageQueueTransitions = async (queue) => {
                     activeMember: queue.activeMember,
                     activeMemberEndTime: queue.activeMemberEndTime
                   }
-      console.log(queue);
+      // console.log(queue);
 
       updateQueue(queue.maker, data)
 
@@ -607,7 +607,7 @@ app.post('/getJoinedQueues', async (req, res) => {
 
     // Fetch all queue documents
     const user = await usersCollection.findOne({ 'mobileNumber.val': mobileNumber });
-    console.log(user);
+    // console.log(user);
     // const queueDocs = await queue.find({}).toArray();
     const joinedQueues = user.joinedQueues;
     // const queueMakers = usersCollection.find({ 'mobileNumber.val': { $in: joinedQueues } });
@@ -665,14 +665,14 @@ app.post('/getQueue', async (req,res) => {
 
     const queue = await queueCollection.findOne({ maker: maker });
     members = queue.members;
-    console.log(queue.members);
+    // console.log(queue.members);
 
 
     const memberInfo = await usersCollection
       .find({ 'mobileNumber.val': { $in: members } })
       .project({ mobileNumber: 1, name: 1, firstImage: 1 }) // Adjust the fields you want to retrieve
       .toArray();
-    console.log(memberInfo);
+    // console.log(memberInfo);
     res.json({memberInfo: memberInfo, active: queue.activeMember})
 
   }
@@ -704,14 +704,14 @@ app.post('/getMyqueue', async (req,res) => {
 
     const queue = await queueCollection.findOne({ maker: maker });
     members = queue.members;
-    console.log(queue.members);
+    // console.log(queue.members);
 
 
     const memberInfo = await usersCollection
       .find({ 'mobileNumber.val': { $in: members } })
       .project({ mobileNumber: 1, name: 1, firstImage: 1 }) // Adjust the fields you want to retrieve
       .toArray();
-    console.log(memberInfo);
+    // console.log(memberInfo);
     res.json(memberInfo)
 
   }
@@ -747,7 +747,7 @@ app.post('/leaveQueue', async (req,res) => {
     const update2 = {
       $pull: { waitingList: userToRemove1 }
     };
-    console.log(data);
+    // console.log(data);
     const result1 = await queueCollection.updateOne(query, update1);
     const result2 = await queueCollection.updateOne(query, update2);
     const userToRemove2 = data.maker;
@@ -833,7 +833,8 @@ app.get('/getQueueDetails', async (req, res) => {
         queueDetails.push(queueWithUser);
         // console.log(queueDetails);
       }
-      console.log(queueDetails);
+      // console.log(queueDetails);
+        console.log("getting q details")
       res.json(queueDetails);
     } catch (err) {
       console.error('Error fetching or processing queue details:', err);
