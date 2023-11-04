@@ -627,7 +627,7 @@ app.post('/getJoinedQueues', async (req, res) => {
       queueMakers.push(user);
       // console.log(queueDetails);
     }
-    console.log(queueMakers);
+    // console.log(queueMakers);
     res.json(queueMakers);
   } catch (err) {
     console.error('Error fetching or processing queue details:', err);
