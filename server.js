@@ -20,7 +20,7 @@ const app = express();
 const server = http.createServer(app);
 // const io = socketIO(server);
 // const io = socketIO(server);
-const io = socketIO(server, { path: '/socket' });
+const io = socketIO(server);
 
 // console.log(io);
 
