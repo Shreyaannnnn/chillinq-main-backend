@@ -153,36 +153,36 @@ async function startServer() {
     app.use(express.json());
 
 
-    app.post('/loadMessages', async (req, res) => {
-      const { targetUserMobileNumber, currentUserMobileNumber, maker } = req.body;
-      // console.log(targetUserMobileNumber);
-      // console.log(currentUserMobileNumber);
-      // console.log(req.body);
+    // app.post('/loadMessages', async (req, res) => {
+    //   const { targetUserMobileNumber, currentUserMobileNumber, maker } = req.body;
+    //   // console.log(targetUserMobileNumber);
+    //   // console.log(currentUserMobileNumber);
+    //   // console.log(req.body);
 
 
-      // Normalize the room name to ensure consistency
-      function normalizeRoomName(user1MobileNumber, user2MobileNumber) {
-      const smallerNumber = Math.min(user1MobileNumber, user2MobileNumber);
-      const largerNumber = Math.max(user1MobileNumber, user2MobileNumber);
-      return `user_${smallerNumber}_user_${largerNumber}`;
-      }
+    //   // Normalize the room name to ensure consistency
+    //   function normalizeRoomName(user1MobileNumber, user2MobileNumber) {
+    //   const smallerNumber = Math.min(user1MobileNumber, user2MobileNumber);
+    //   const largerNumber = Math.max(user1MobileNumber, user2MobileNumber);
+    //   return `user_${smallerNumber}_user_${largerNumber}`;
+    //   }
   
-      // When creating a room or saving a message, use the normalized room name
-      const room = normalizeRoomName(targetUserMobileNumber, currentUserMobileNumber);
+    //   // When creating a room or saving a message, use the normalized room name
+    //   const room = normalizeRoomName(targetUserMobileNumber, currentUserMobileNumber);
 
-      // Query your MongoDB collection for messages in the specific chat room
-      const messages = await chatMessagesCollection.find({
-        room: room,
-      }).toArray();
+    //   // Query your MongoDB collection for messages in the specific chat room
+    //   const messages = await chatMessagesCollection.find({
+    //     room: room,
+    //   }).toArray();
 
-      const queue = await queueCollection.findOne({maker:maker})
-      const timestamp = queue.activeMemberEndTime
-      // console.log(queue);
+    //   const queue = await queueCollection.findOne({maker:maker})
+    //   const timestamp = queue.activeMemberEndTime
+    //   // console.log(queue);
 
-      // Send the loaded messages to the client
-      // console.log(messages);
-      res.json({ messages, timestamp});
-    });
+    //   // Send the loaded messages to the client
+    //   // console.log(messages);
+    //   res.json({ messages, timestamp});
+    // });
 
 
 
@@ -273,6 +273,38 @@ startServer();
 
 
 
+
+
+app.post('/loadMessages', async (req, res) => {
+      const { targetUserMobileNumber, currentUserMobileNumber, maker } = req.body;
+      // console.log(targetUserMobileNumber);
+      // console.log(currentUserMobileNumber);
+      // console.log(req.body);
+
+
+      // Normalize the room name to ensure consistency
+      function normalizeRoomName(user1MobileNumber, user2MobileNumber) {
+      const smallerNumber = Math.min(user1MobileNumber, user2MobileNumber);
+      const largerNumber = Math.max(user1MobileNumber, user2MobileNumber);
+      return `user_${smallerNumber}_user_${largerNumber}`;
+      }
+  
+      // When creating a room or saving a message, use the normalized room name
+      const room = normalizeRoomName(targetUserMobileNumber, currentUserMobileNumber);
+
+      // Query your MongoDB collection for messages in the specific chat room
+      const messages = await chatMessagesCollection.find({
+        room: room,
+      }).toArray();
+
+      const queue = await queueCollection.findOne({maker:maker})
+      const timestamp = queue.activeMemberEndTime
+      // console.log(queue);
+
+      // Send the loaded messages to the client
+      // console.log(messages);
+      res.json({ messages, timestamp});
+    });
 
 
 
